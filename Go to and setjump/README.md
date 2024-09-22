@@ -26,7 +26,7 @@ ví dụ:  in ra các giá trị của a từ 10-20 và bỏ qua số 15
     }
 
 
-## setjump.h
+## Setjump.h
 
 1.khái niệm
 
