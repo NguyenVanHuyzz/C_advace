@@ -22,6 +22,7 @@ Extern là một lệnh trong ngôn ngữ lập trình C được sử dụng
 
 
 ví dụ:
+
 File 1.c
     #include<stdio.h>
     #include"File_1.h"
@@ -176,10 +177,10 @@ ví dụ sử dụng register giảm thời hoạt động chương trình
 Khái niệm
 * "volatile" được sử dụng để cho biết cho trình biên dịch rằng một biến hoặc vị trí bộ nhớ cụ thể có thể được thay đổi bên ngoài sự kiểm soát của chương trình. Điều này có nghĩa là trình biên dịch không thể đưa ra bất kỳ giả định nào về giá trị của biến và luôn phải tải và lưu trữ biến như nó có thể thay đổi bất cứ lúc nào.
 *  "volatile" đặc biệt hữu ích khi làm việc với các thiết bị phần cứng, các hàm dịch vụ ngắt, lỗi.
+*  
 ví dụ
 
     #include "stm32f10x.h"
-
     volatile int i = 0;
     int a = 100;
 
