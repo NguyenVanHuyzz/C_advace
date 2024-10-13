@@ -1,4 +1,4 @@
-POINTER
+# POINTER
 1.	Khái niệm:
 •	Con trỏ hay biến con trỏ cũng là một biến thông thường nhưng giá trị mà nó lưu lại là địa chỉ của 1 biến khác
 
@@ -26,7 +26,8 @@ printf("%d byte\n", sizeof(float*)); // kich thuoc con tro phu thuoc vao trinh b
     }
 
 
-2.	 Function pointer
+# Function pointer
+
 Khái niêm
 Là một con trỏ đến vùng nhớ trong bộ nhớ chứa mã máy của hàm được định nghĩa trong chương trình.
 •	con trỏ hàm cho phép bạn truyền một hàm như là một đối số cho một hàm khác
@@ -96,7 +97,7 @@ ví dụ truyền hàm như một giá trị trả về từ một hàm khác
     }  
 
 
-3.	Pointer to constant
+# Pointer to constant
 Khái niệm
 Một con trỏ không thể thay đổi giá trị tại địa chỉ mà nó trỏ đến thông qua dereference nhưng giá trị tại địa chỉ đó có thể thay đổi.
 
@@ -115,7 +116,7 @@ VÍ DỤ
 
 
 
-4.	Constant Pointer
+# Constant Pointer
 Khái niệm:
 con trỏ mà giá trị nó trỏ đến (địa chỉ ) không thể thay đổi. chỉ được khỏi tạo một lần và không thay đổi được địa chỉ.
 
@@ -131,7 +132,7 @@ printf("value: %d\n", *const_ptr);
 
 
 
-5.	Pointer to pointer
+# Pointer to pointer
 Khái niệm :
 Con trỏ đến con trỏ (Pointer to Pointer) là một kiểu dữ liệu trong ngôn ngữ lập trình cho phép bạn lưu trữ địa chỉ của một con trỏ. Con trỏ đến con trỏ cung cấp một cấp bậc trỏ mới, cho phép bạn thay đổi giá trị của con trỏ gốc.
 
