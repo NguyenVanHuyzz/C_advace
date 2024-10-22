@@ -1871,7 +1871,7 @@ ví dụ:
     }
 
 
-# linklish
+# linked lish
  
 Khái niệm
 
