@@ -577,7 +577,7 @@ Ví dụ
 
 
 
-#   GOTO
+#  GOTO
 
 1. Khái niệm 
 
@@ -1169,7 +1169,7 @@ ví dụ:
         return 0;
     }
 
-#Calloc
+# Calloc
 
 Khái niệm:
 calloc() (Contiguous Allocation) là một hàm dùng để cấp phát bộ nhớ động từ vùng heap. calloc() tương tự như malloc(), nhưng có một điểm khác biệt chính: calloc() không chỉ cấp phát bộ nhớ mà còn khởi tạo tất cả các byte của vùng nhớ đó về 0.
