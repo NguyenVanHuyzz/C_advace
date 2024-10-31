@@ -577,7 +577,7 @@ Ví dụ
 
 
 
-#  GOTO
+#   GOTO
 
 1. Khái niệm 
 
@@ -1169,7 +1169,7 @@ ví dụ:
         return 0;
     }
 
-# Calloc
+#Calloc
 
 Khái niệm:
 calloc() (Contiguous Allocation) là một hàm dùng để cấp phát bộ nhớ động từ vùng heap. calloc() tương tự như malloc(), nhưng có một điểm khác biệt chính: calloc() không chỉ cấp phát bộ nhớ mà còn khởi tạo tất cả các byte của vùng nhớ đó về 0.
@@ -2097,6 +2097,596 @@ Linked list là một cấu trúc dữ liệu trong lập trình máy tính, đ�
     }
 
 
+
+# C++
+
+# I.Class
+
+khái niệm:
+Class (lớp) là một khái niệm quan trọng trong lập trình hướng đối tượng (OOP) trong C++. Một class là một bản thiết kế (blueprint) cho một đối tượng (object), định nghĩa các thuộc tính (biến) và phương thức (hàm) mà đối tượng sẽ có. Nó giúp tổ chức dữ liệu và chức năng liên quan thành một đơn vị duy nhất.
+
+Một lớp bao gồm hai thành phần chính:
+
+Thuộc tính (Attributes hay Members): Là các biến dữ liệu được khai báo trong lớp.
+Phương thức (Methods hay Functions): Là các hàm định nghĩa các hành vi của lớp, dùng để thao tác với dữ liệu
+
+ví dụ:
+
+    #include <iostream>
+    using namespace std;
+
+    // Định nghĩa lớp Car
+    class Car 
+    {
+    private:
+        string brand;
+        int year;
+
+    public:
+        // Hàm khởi tạo (Constructor) để khởi tạo đối tượng
+        Car(string b, int y) 
+        {
+            brand = b;
+            year = y;
+        }
+
+        // Phương thức hiển thị thông tin xe
+        void displayInfo() 
+        {
+            cout << "Brand: " << brand << ", Year: " << year << endl;
+        }
+
+        // Setter: Cập nhật thông tin brand
+        void setBrand(string b) 
+        {
+            brand = b;
+        }
+
+        // Getter: Lấy thông tin brand
+        string getBrand() 
+        {
+            return brand;
+        }
+    };
+
+    int main() {
+        // Tạo một đối tượng Car
+        Car car1("Toyota", 2020);
+
+        // Gọi phương thức hiển thị thông tin xe
+        car1.displayInfo();
+
+        // Thay đổi thuộc tính brand bằng setter
+        car1.setBrand("Honda");
+
+        // Hiển thị lại thông tin xe sau khi cập nhật
+        car1.displayInfo();
+
+        return 0;
+    }
+
+# OOP
+
+## II.Tính đóng gói
+
+Khái niệm: Tính đóng gói (Encapsulation) là một trong những nguyên tắc quan trọng của lập trình hướng đối tượng (OOP). Nó đảm bảo rằng dữ liệu và các phương thức (hàm) của một đối tượng được đóng gói lại với nhau và được bảo vệ khỏi sự can thiệp từ bên ngoài, chỉ có thể truy cập thông qua các phương thức được cho phép. Điều này giúp tăng tính bảo mật, kiểm soát và duy trì tính toàn vẹn của dữ liệu.
+
+Ý nghĩa của tính đóng gói:
+
++Bảo vệ dữ liệu: Các thuộc tính (biến thành viên) của lớp có thể được khai báo là private hoặc protected để ngăn không cho các đối tượng bên ngoài trực tiếp truy cập hoặc thay đổi chúng.
+
++Ẩn chi tiết cài đặt: Người dùng đối tượng không cần biết chi tiết cài đặt bên trong của lớp, chỉ cần sử dụng các phương thức công khai (public) để thao tác với đối tượng.
+
++Kiểm soát truy cập: Việc truy cập và thay đổi dữ liệu được kiểm soát thông qua các phương thức getter và setter, đảm bảo tính hợp lệ và an toàn của dữ liệu.
+
+ví dụ:
+
+    #include <iostream>
+    using namespace std;
+
+    class Student {
+    private:
+        string name;
+        int age;
+        float gpa;
+
+    public:
+        // Constructor để khởi tạo thông tin sinh viên
+        Student(string n, int a, float g) {
+            name = n;
+            age = a;
+            gpa = g;
+        }
+
+        // Getter để lấy thông tin tên
+        string getName() {
+            return name;
+        }
+
+        // Setter để thay đổi tên
+        void setName(string n) {
+            name = n;
+        }
+
+        // Setter và getter để thay đổi hoặc lấy thông tin GPA
+        float getGPA() {
+            return gpa;
+        }
+
+        void setGPA(float g) {
+            if (g >= 0.0 && g <= 4.0) {
+                gpa = g;
+            } else {
+                cout << "Invalid GPA!" << endl;
+            }
+        }
+
+        // Phương thức hiển thị thông tin sinh viên
+        void displayInfo() {
+            cout << "Student Name: " << name << ", Age: " << age << ", GPA: " << gpa << endl;
+        }
+    };
+
+    int main() {
+        // Tạo một đối tượng sinh viên
+        Student student1("Alice", 20, 3.5);
+
+        // Hiển thị thông tin ban đầu
+        student1.displayInfo();
+
+        // Cập nhật thông tin sinh viên
+        student1.setGPA(3.8);
+        student1.setName("Alice Nguyen");
+
+        // Hiển thị lại thông tin sau khi cập nhật
+        student1.displayInfo();
+
+        return 0;
+    }
+
+
+## III TÍNH KẾ THỪA
+
+ khái niệm:
+Nó cho phép một lớp con (subclass) kế thừa các thuộc tính và phương thức của một lớp cha (superclass). Lớp con có thể sử dụng, mở rộng hoặc ghi đè các thuộc tính và phương thức của lớp cha để tạo ra hành vi mới hoặc thêm chức năng.
+
+Ưu điểm:
+
+1.Tái sử dụng mã nguồn: Kế thừa cho phép sử dụng lại các thuộc tính và phương thức từ lớp cha mà không phải viết lại.
+
+2.Mở rộng tính năng: Lớp con có thể thêm hoặc mở rộng các chức năng mới dựa trên những gì đã có từ lớp cha.
+
+3.Dễ bảo trì và mở rộng: Khi có thay đổi, chỉ cần chỉnh sửa trong lớp cha, các lớp con sẽ tự động cập nhật.
+
+Mức truy cập kế thừa (Inheritance Access Specifiers):
+
+## Kế thừa MEMBER
+
++Các member public của class cha vẫn sẽ là public trong class con.
++Các member protected của class cha vẫn sẽ là protected trong class con.
++Các member private của class cha không thể truy cập trực tiếp từ class con nhưng có thể được truy cập gián tiếp qua các phương thức public hoặc protected của class cha
+
+ví dụ
+
+    #include <iostream>
+    #include <string>
+    using namespace std;
+
+    // Lớp cha Person
+    class Person {
+    public:
+        string name;      // Biến public - có thể truy cập trực tiếp từ bên ngoài
+    protected:
+        int age;          // Biến protected - chỉ truy cập được từ lớp dẫn xuất hoặc lớp cha
+    private:
+        string address;   // Biến private - chỉ truy cập được bên trong lớp Person
+
+    public:
+        // Constructor
+        Person(string n, int a, string addr) : name(n), age(a), address(addr) {}
+
+        // Phương thức public
+        void display() {
+            cout << "Name: " << name << ", Age: " << age << endl;
+        }
+
+    protected:
+        // Phương thức protected
+        void displayAge() {
+            cout << "Age (from protected method): " << age << endl;
+        }
+
+    private:
+        // Phương thức private - chỉ có thể gọi bên trong lớp Person
+        void displayAddress() {
+            cout << "Address (from private method): " << address << endl;
+        }
+
+    public:
+        // Public method to display address using the private method
+        void showAddress() {
+            displayAddress();
+        }
+    };
+
+    // Lớp con Employee kế thừa từ Person
+    class Employee : public Person {
+    public:
+        string position;  // Biến public của Employee
+
+        // Constructor của Employee
+        Employee(string n, int a, string addr, string pos) : Person(n, a, addr), position(pos) {}
+
+        // Ghi đè phương thức display
+        void display() {
+            Person::display(); // Gọi phương thức display() của lớp cha
+            cout << "Position: " << position << endl;
+        }
+
+        // Phương thức sử dụng biến protected của lớp cha
+        void showProtected() {
+            cout << "Accessing protected age from Person: " << age << endl;
+        }
+
+        // Phương thức sử dụng biến và phương thức protected từ lớp cha
+        void showDetails() {
+            displayAge();  // Gọi phương thức protected từ lớp cha
+            cout << "Position: " << position << endl;
+        }
+    };
+
+    int main() {
+        // Tạo đối tượng của lớp Employee
+        Employee emp("John Doe", 30, "123 Main St", "Software Engineer");
+
+        // Gọi phương thức display của Employee
+        emp.display();
+
+        // Gọi phương thức showProtected để truy cập biến protected từ lớp cha
+        emp.showProtected();
+
+        // Gọi phương thức showDetails để sử dụng các biến protected và phương thức protected từ lớp cha
+        emp.showDetails();
+
+        // Truy cập biến public của lớp cha trực tiếp
+        cout << "Directly accessing public variable from Person: " << emp.name << endl;
+
+        // Truy cập biến public của lớp con
+        cout << "Directly accessing public variable from Employee: " << emp.position << endl;
+
+        // Truy cập địa chỉ thông qua phương thức public trong Person (dùng phương thức private)
+        emp.showAddress();
+
+        return 0;
+    }
+
+## KẾ THỪA METHODS
+
+1.Kế thừa public:
+
++Các phương thức public của lớp cha sẽ vẫn là public trong lớp con.
++Các phương thức protected của lớp cha sẽ là protected trong lớp con.
++Các phương thức private không thể truy cập trực tiếp trong lớp con.
+
+2.Kế thừa protected:
+
++Các phương thức public và protected của lớp cha sẽ trở thành protected trong lớp con.
++Các phương thức private của lớp cha vẫn không thể truy cập trực tiếp trong lớp con.
+
+3.Kế thừa private:
+
++Tất cả các phương thức public và protected của lớp cha sẽ trở thành private trong lớp con.
++Các phương thức private của lớp cha vẫn không thể truy cập trực tiếp trong lớp con.
+
+
+VÍ DỤ
+
+
+    #include <iostream>
+    using namespace std;
+
+    class Person {
+    public:
+        void publicMethod() {
+            cout << "Public method in Person" << endl;
+        }
+
+    protected:
+        void protectedMethod() {
+            cout << "Protected method in Person" << endl;
+        }
+
+    private:
+        void privateMethod() {
+            cout << "Private method in Person" << endl;
+        }
+
+    public:
+        // Phương thức ảo để lớp con có thể ghi đè
+        virtual void display() {
+            cout << "Display method in Person" << endl;
+        }
+    };
+
+    // Lớp con kế thừa `public` từ Person
+    class Student : public Person {
+    public:
+        void useMethods() {
+            publicMethod();        // Có thể gọi được vì kế thừa `public`
+            protectedMethod();     // Có thể gọi được vì là `protected` và nằm trong lớp con
+            // privateMethod();    // Không thể gọi vì privateMethod là `private` trong Person
+        }
+
+        // Ghi đè phương thức display()
+        void display() override {
+            Person::display();    // Gọi phương thức display() của lớp cha
+            cout << "Display method in Student" << endl;
+        }
+    };
+
+    // Lớp con kế thừa `protected` từ Person
+    class Teacher : protected Person {
+    public:
+        void useMethods() {
+            publicMethod();        // Có thể gọi được nhưng thành protected trong Teacher
+            protectedMethod();     // Có thể gọi được vì là protected trong Person
+        }
+
+        void display() override {
+            Person::display();
+            cout << "Display method in Teacher" << endl;
+        }
+    };
+
+    int main() {
+        Student student;
+        student.useMethods();
+        student.display();
+
+        cout << endl;
+
+        Teacher teacher;
+        teacher.useMethods();
+        teacher.display();
+        
+        // Không thể gọi publicMethod từ đối tượng teacher vì nó đã thành protected
+        // teacher.publicMethod();  // Lỗi biên dịch
+
+        return 0;
+    }
+
+## TÍNH ĐA HÌNH
+
+### 1.ĐA HÌNH TẠI THỜI ĐIỂM CHẠY
+
+Khái niệm: Đa hình tại thời điểm chạy (Runtime Polymorphism) trong C++ là một tính năng cho phép gọi phương thức ghi đè của lớp con thông qua con trỏ hoặc tham chiếu của lớp cha trong thời gian chạy (runtime). Đa hình tại thời điểm chạy chủ yếu được thực hiện qua phương thức ảo (virtual functions), giúp C++ quyết định chính xác phương thức nào cần gọi khi chương trình đang chạy.
+
+ + Khi một phương thức trong lớp cha được khai báo là virtual, phương thức này có thể được ghi đè (override) trong lớp con.
+
+ + Khi gọi phương thức qua con trỏ hoặc tham chiếu của lớp cha trỏ đến đối tượng của lớp con, C++ sẽ gọi phương thức của lớp con thay vì của lớp cha.
+ 
+ ưu điểm:
+
+ + Linh hoạt trong việc sử dụng lớp cha và lớp con: Bạn có thể sử dụng cùng một kiểu dữ liệu (con trỏ hoặc tham chiếu của lớp cha) để làm việc với các lớp con khác nhau mà không cần thay đổi mã nguồn.
+
+ + Tăng khả năng mở rộng và bảo trì mã nguồn: Nếu cần thêm lớp con mới, chỉ cần kế thừa lớp cha và ghi đè phương thức mà không cần sửa đổi mã đã có.
+
+ + Đơn giản hóa mã nguồn: Giúp viết các hàm và phương thức linh hoạt hơn khi không cần phải kiểm tra kiểu đối tượng cụ thể.
+
+VÍ DỤ:
+
+    #include <iostream>
+    using namespace std;
+
+    // Lớp cha Animal
+    class Animal {
+    public:
+        // Phương thức ảo
+        virtual void makeSound() {
+            cout << "Animal makes a sound" << endl;
+        }
+
+        virtual ~Animal() {}  // Destructor ảo để tránh rò rỉ bộ nhớ khi dùng đa hình
+    };
+
+    // Lớp con Dog kế thừa từ Animal
+    class Dog : public Animal {
+    public:
+        // Ghi đè phương thức makeSound của lớp Animal
+        void makeSound() override {
+            cout << "Dog barks: Woof! Woof!" << endl;
+        }
+    };
+
+    // Lớp con Cat kế thừa từ Animal
+    class Cat : public Animal {
+    public:
+        // Ghi đè phương thức makeSound của lớp Animal
+        void makeSound() override {
+            cout << "Cat meows: Meow! Meow!" << endl;
+        }
+    };
+
+    int main() {
+        Animal* animal1 = new Dog();  // Con trỏ lớp cha trỏ tới đối tượng Dog
+        Animal* animal2 = new Cat();  // Con trỏ lớp cha trỏ tới đối tượng Cat
+
+        animal1->makeSound();  // Gọi makeSound() của Dog nhờ tính đa hình
+        animal2->makeSound();  // Gọi makeSound() của Cat nhờ tính đa hình
+
+        delete animal1;  // Giải phóng bộ nhớ
+        delete animal2;
+
+        return 0;
+    }
+
+### 2.ĐA HÌNH TẠI THỜI ĐIỂM BIÊN DỊCH
+
+#### Nạp chồng hàm (Function Overloading):
+
+ + Cho phép nhiều hàm cùng tên nhưng khác nhau về tham số (số lượng, kiểu dữ liệu, hoặc thứ tự của tham số) trong cùng một phạm vi.
+
+ + Trình biên dịch sẽ chọn hàm thích hợp để gọi dựa trên danh sách tham số.
+
+
+
+VÍ DU:
+
+    #include <iostream>
+    using namespace std;
+
+    class Printer {
+    public:
+        // Hàm in số nguyên
+        void print(int i) {
+            cout << "Integer: " << i << endl;
+        }
+
+        // Hàm in số thực
+        void print(double d) {
+            cout << "Double: " << d << endl;
+        }
+
+        // Hàm in chuỗi ký tự
+        void print(string s) {
+            cout << "String: " << s << endl;
+        }
+    };
+
+    int main() {
+        Printer p;
+        p.print(10);          // Gọi hàm print(int)
+        p.print(3.14);        // Gọi hàm print(double)
+        p.print("Hello");     // Gọi hàm print(string)
+
+        return 0;
+    }
+
+
+#### Nạp chồng toán tử (Operator Overloading)
+
++ Cho phép định nghĩa lại các toán tử như +, -, *, == để hoạt động với các kiểu dữ liệu tự định nghĩa (như các lớp).
+
++ Toán tử được nạp chồng sẽ có thể làm việc trên các đối tượng của lớp tương tự như cách làm việc với các kiểu dữ liệu cơ bản.
+
+VÍ DỤ:
+
+    #include <iostream>
+    using namespace std;
+
+    class Complex 
+    {
+    private:
+        double real;
+        double imag;
+
+    public:
+        // Constructor
+        Complex(double r = 0, double i = 0) : real(r), imag(i) {}
+
+        // Nạp chồng toán tử +
+        Complex operator + (const Complex& c) 
+        {
+            return Complex(real + c.real, imag + c.imag);
+        }
+
+        // Hàm in số phức
+        void display() const 
+        {
+            cout << real << " + " << imag << "i" << endl;
+        }
+    };
+
+    int main() 
+    {
+        Complex c1(3.0, 2.0);
+        Complex c2(1.5, 4.5);
+
+        Complex c3 = c1 + c2; // Gọi toán tử + đã nạp chồng
+        c3.display();         // Hiển thị kết quả
+
+        return 0;
+    }
+
+## TÍNH TRỪ TƯỢNG
+
+KHÁI NIỆM:
+Tính trừu tượng trong lập trình hướng đối tượng (OOP) là khái niệm cho phép ẩn đi các chi tiết triển khai bên trong của đối tượng và chỉ hiển thị những thông tin cần thiết để sử dụng đối tượng đó. Trong C++, tính trừu tượng giúp tập trung vào "những gì" một đối tượng làm thay vì "cách" mà nó thực hiện
+
+VÍ DỤ:
+
+    #include <iostream>
+    #include <cmath>
+    using namespace std;
+
+    // Lớp trừu tượng Shape
+    class Shape {
+    public:
+        // Phương thức thuần ảo
+        virtual double area() = 0; // Hàm tính diện tích, chưa có triển khai
+
+        // Phương thức thông thường
+        virtual void display() {
+            cout << "This is a shape" << endl;
+        }
+    };
+
+    // Lớp Circle kế thừa từ Shape
+    class Circle : public Shape {
+    private:
+        double radius;
+
+    public:
+        Circle(double r) : radius(r) {}
+
+        // Triển khai phương thức area()
+        double area() override {
+            return 3.14159 * radius * radius;
+        }
+
+        void display() override {
+            cout << "Circle with radius: " << radius << ", Area: " << area() << endl;
+        }
+    };
+
+    // Lớp Rectangle kế thừa từ Shape
+    class Rectangle : public Shape {
+    private:
+        double width, height;
+
+    public:
+        Rectangle(double w, double h) : width(w), height(h) {}
+
+        // Triển khai phương thức area()
+        double area() override 
+        {
+            return width * height;
+        }
+
+        void display() override
+        {
+            cout << "Rectangle with width: " << width << ", height: " << height << ", Area: " << area() << endl;
+        }
+    };
+
+    int main() 
+    {
+        Shape* shape1 = new Circle(5.0);    // Tạo đối tượng Circle qua con trỏ lớp cha
+        Shape* shape2 = new Rectangle(4.0, 6.0);  // Tạo đối tượng Rectangle qua con trỏ lớp cha
+
+        // Gọi hàm display() của mỗi đối tượng
+        shape1->display();
+        shape2->display();
+
+        // Giải phóng bộ nhớ
+        delete shape1;
+        delete shape2;
+
+        return 0;
+    }
+
+    
+#
 
 
 
