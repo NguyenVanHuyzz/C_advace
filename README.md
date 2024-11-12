@@ -2686,11 +2686,407 @@ VÍ DỤ:
     }
 
     
-#
+## TEMPLATE
+
+ Khái niệm : 
+Template trong C++ là một công cụ mạnh mẽ cho phép viết các hàm và lớp chung chung, có thể hoạt động với nhiều kiểu dữ liệu khác nhau mà không cần viết lại mã nguồn cho mỗi kiểu dữ liệu. Template giúp tăng tính linh hoạt và tái sử dụng mã trong C++.
+
+Các loại template trong C++
+
++ Function Template: Cho phép viết hàm tổng quát, có thể hoạt động với nhiều kiểu dữ liệu khác nhau.
+
+ví dụ :
+
+    #include <iostream>
+    using namespace std;
+
+    template <typename T>
+    T add(T a, T b) {
+        return a + b;
+    }
+
+    int main() {
+        cout << "Sum of integers: " << add(5, 10) << endl;         // Gọi add với int
+        cout << "Sum of doubles: " << add(5.5, 2.3) << endl;       // Gọi add với double
+        cout << "Sum of characters: " << add('A', 1) << endl;      // Gọi add với char
+
+        return 0;
+    }
 
 
 
++ Class Template: Cho phép định nghĩa các lớp có thể làm việc với nhiều kiểu dữ liệu khác nhau.
 
+ví du:
+
+    #include <iostream>
+    using namespace std;
+
+    template <typename T>
+    class Calculator {
+    private:
+        T num1, num2;
+
+    public:
+        // Constructor để khởi tạo giá trị cho num1 và num2
+        Calculator(T a, T b) : num1(a), num2(b) {}
+
+        // Phép cộng
+        T add() {
+            return num1 + num2;
+        }
+
+        // Phép trừ
+        T subtract() {
+            return num1 - num2;
+        }
+
+        // Phép nhân
+        T multiply() {
+            return num1 * num2;
+        }
+
+        // Phép chia, kiểm tra chia cho 0
+        T divide() {
+            if (num2 != 0) {
+                return num1 / num2;
+            } else {
+                cout << "Error: Division by zero" << endl;
+                return 0; // Giá trị trả về mặc định khi chia cho 0
+            }
+        }
+    };
+
+    int main() {
+        // Tạo đối tượng Calculator với kiểu int
+        Calculator<int> intCalc(10, 5);
+        cout << "Integer calculations:" << endl;
+        cout << "10 + 5 = " << intCalc.add() << endl;
+        cout << "10 - 5 = " << intCalc.subtract() << endl;
+        cout << "10 * 5 = " << intCalc.multiply() << endl;
+        cout << "10 / 5 = " << intCalc.divide() << endl;
+
+        // Tạo đối tượng Calculator với kiểu double
+        Calculator<double> doubleCalc(5.5, 2.2);
+        cout << "\nDouble calculations:" << endl;
+        cout << "5.5 + 2.2 = " << doubleCalc.add() << endl;
+        cout << "5.5 - 2.2 = " << doubleCalc.subtract() << endl;
+        cout << "5.5 * 2.2 = " << doubleCalc.multiply() << endl;
+        cout << "5.5 / 2.2 = " << doubleCalc.divide() << endl;
+
+        return 0;
+    }
+
+
+### Advanced template techniques
+Metaprogramming
+Khái niệm :C++ Template Metaprogramming (TMP) là việc sử dụng các mẫu (templates) của C++ để thực hiện các phép toán hoặc logic tại thời gian biên dịch. Thay vì sử dụng các lệnh thông thường để thực hiện tính toán khi chương trình đang chạy, các mẫu có thể được sử dụng để xây dựng mã mà trình biên dịch xử lý và tối ưu hóa.
+
+ví dụ:
+
+    #include <iostream>
+
+    // Lớp mẫu đệ quy để tính giai thừa
+    template <int N>
+    class Factorial {
+    public:
+        static const int value = N * Factorial<N - 1>::value;
+    };
+
+    // Trường hợp cơ sở để kết thúc đệ quy
+    template <>
+    class Factorial<0> {
+    public:
+        static const int value = 1;
+    };
+
+    int main() {
+        // Ví dụ sử dụng
+        const int number = 5; // Bạn có thể thay đổi giá trị này
+        std::cout << "Giai thừa của " << number << " là: " << Factorial<number>::value << std::endl;
+        return 0;
+    }
+
+### Expression Templates
+khái niệm:
+Expression Templates là một kỹ thuật lập trình nâng cao trong C++ được sử dụng để tối ưu hóa việc tính toán các biểu thức phức tạp, đặc biệt trong các thư viện tính toán số học và các thư viện xử lý ma trận hoặc vectơ như Eigen hoặc Blitz++. Kỹ thuật này giúp tránh tạo các đối tượng trung gian không cần thiết và giảm thiểu các lần gọi hàm, dẫn đến hiệu suất tốt hơn.
+
+
+ví dụ:
+
+    #include <iostream>
+
+    // Lớp mẫu biểu diễn một biểu thức cộng
+    template <typename L, typename R>
+    class Add {
+    public:
+        // Constructor nhận hai tham chiếu: `lhs` và `rhs` (các thành phần bên trái và bên phải của phép cộng)
+        Add(const L& lhs, const R& rhs) : lhs(lhs), rhs(rhs) {}
+
+        // Toán tử gán [] được dùng để tính giá trị của biểu thức tại một chỉ số cụ thể
+        double operator[](std::size_t i) const {
+            return lhs[i] + rhs[i];
+        }
+
+        // Phương thức `size()` trả về kích thước của biểu thức
+        std::size_t size() const { return lhs.size(); }
+
+    private:
+        const L& lhs; // Tham chiếu đến thành phần bên trái của biểu thức
+        const R& rhs; // Tham chiếu đến thành phần bên phải của biểu thức
+    };
+
+    // Lớp biểu diễn một vectơ
+    class Vector {
+    public:
+        // Constructor để khởi tạo vectơ với kích thước nhất định
+        Vector(std::size_t size) : data(new double[size]), size_(size) {}
+
+        // Destructor để giải phóng bộ nhớ
+        ~Vector() { delete[] data; }
+
+        // Toán tử gán [] để truy cập hoặc thay đổi phần tử của vectơ
+        double& operator[](std::size_t i) { return data[i]; }
+        double operator[](std::size_t i) const { return data[i]; }
+        
+        // Phương thức trả về kích thước của vectơ
+        std::size_t size() const { return size_; }
+
+        // Toán tử cộng sử dụng Expression Templates
+        template <typename R>
+        Add<Vector, R> operator+(const R& rhs) const {
+            return Add<Vector, R>(*this, rhs); // Trả về một đối tượng `Add` thay vì tính ngay
+        }
+
+    private:
+        double* data; // Mảng động chứa các phần tử của vectơ
+        std::size_t size_; // Kích thước của vectơ
+    };
+
+    // Hàm để in một vectơ
+    template <typename E>
+    void print(const E& expr) {
+        for (std::size_t i = 0; i < expr.size(); ++i) {
+            std::cout << expr[i] << " ";
+        }
+        std::cout << std::endl;
+    }
+
+    int main() {
+        Vector a(3), b(3), c(3);
+        a[0] = 1; a[1] = 2; a[2] = 3;
+        b[0] = 4; b[1] = 5; b[2] = 6;
+        c[0] = 7; c[1] = 8; c[2] = 9;
+
+        auto result = a + b + c; // Không tạo đối tượng trung gian
+        print(result);
+
+        return 0;
+    }
+
+### Variadic Templates
+
+ví dụ:
+
+    #include <iostream>
+
+    // Trường hợp cơ sở: khi không còn tham số nào, trả về 0
+    int sum() 
+    {
+        return 0;
+    }
+
+    // Hàm mẫu với variadic templates để tính tổng
+    template <typename T, typename... Args>
+    int sum(T first, Args... args) 
+    {
+        return first + sum(args...); // Cộng tham số đầu tiên với kết quả của các tham số còn lại
+    }
+
+    int main() 
+    {
+        std::cout << "Tổng là: " << sum(1, 2, 3, 4, 5) << std::endl; // In ra 15
+        return 0;
+    }
+
+
+
+## NAMESPACE 
+
+KHÁI NIỆM :Namespace trong C++ là một tính năng dùng để nhóm các định danh (như tên lớp, hàm, biến, và hằng số) lại với nhau dưới một tên chung. Mục đích chính của namespace là để tránh xung đột tên trong các chương trình lớn hoặc khi sử dụng nhiều thư viện.
+
+Từ khóa using cho phép bạn sử dụng các phần tử trong namespace mà không cần phải sử dụng toán tử '::' mỗi khi truy cập.
+
+Chỉ sử dụng using namespace khi member muốn truy cập đến là duy nhất.
+
+VÍ DỤ:
+
+#include <iostream>
+
+    // Khai báo namespace
+    namespace MathOperations {
+        int add(int a, int b) {
+            return a + b;
+        }
+
+        int subtract(int a, int b) {
+            return a - b;
+        }
+    }
+
+    int main() {
+        // Sử dụng các hàm trong namespace MathOperations
+        int sum = MathOperations::add(5, 3);
+        int difference = MathOperations::subtract(5, 3);
+
+        std::cout << "Tổng: " << sum << std::endl;
+        std::cout << "Hiệu: " << difference << std::endl;
+
+        return 0;
+    }
+
+### NAMESPACE LỒNG NHAU
+
+C++ cho phép tạo các namespace lồng nhau, nghĩa là một namespace có thể chứa một namespace khác bên trong nó.
+
+
+ví dụ:
+
+    namespace Algorithms {
+        namespace Sorting {
+            // Hàm sắp xếp nổi bọt (bubble sort) để sắp xếp mảng đầu vào
+            void bubbleSort(std::vector<int>& arr) {
+                for (size_t i = 0; i < arr.size() - 1; ++i) {
+                    for (size_t j = 0; j < arr.size() - i - 1; ++j) {
+                        if (arr[j] > arr[j + 1]) {
+                            std::swap(arr[j], arr[j + 1]); // Hoán đổi nếu phần tử trước lớn hơn phần tử sau
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    int main() {
+        std::vector<int> data = {5, 3, 8, 1, 2};
+        // Gọi hàm bubbleSort từ namespace Algorithms::Sorting
+        Algorithms::Sorting::bubbleSort(data);
+        for (int num : data) {
+            std::cout << num << " ";
+        }
+        return 0;
+    }
+
+
+VÍ DU:
+
+    #include <iostream>
+    #include <vector>
+    #include <algorithm>
+
+    namespace Algorithms {
+        // Định nghĩa thuật toán tìm kiếm
+        namespace Search {
+            bool linearSearch(const std::vector<int>& arr, int target) {
+                for (int num : arr) {
+                    if (num == target) return true; // Tìm thấy phần tử
+                }
+                return false; // Không tìm thấy
+            }
+        }
+    }
+
+    // Mở rộng namespace Algorithms để thêm thuật toán sắp xếp
+    namespace Algorithms {
+        namespace Sorting {
+            void bubbleSort(std::vector<int>& arr) {
+                for (size_t i = 0; i < arr.size() - 1; ++i) {
+                    for (size_t j = 0; j < arr.size() - i - 1; ++j) {
+                        if (arr[j] > arr[j + 1]) {
+                            std::swap(arr[j], arr[j + 1]); // Hoán đổi nếu cần thiết
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    int main() {
+        std::vector<int> data = {5, 1, 4, 2, 8};
+        // Gọi hàm bubbleSort từ namespace mở rộng
+        Algorithms::Sorting::bubbleSort(data);
+
+        std::cout << "Sorted array: ";
+        for (int num : data) {
+            std::cout << num << " ";
+        }
+        std::cout << std::endl;
+
+        // Gọi hàm linearSearch từ namespace ban đầu
+        bool found = Algorithms::Search::linearSearch(data, 4);
+        std::cout << "Element found: " << (found ? "Yes" : "No") << std::endl;
+
+        return 0;
+    }
+
+
+
+### NAMEPASE MỞ RỘNG
+
+KHÁI NIỆM:
+
+Namespace có thể được mở rộng bằng cách khai báo nhiều lần cùng một tên namespace trong các phần khác nhau của chương trình. Các khai báo này sẽ được ghép lại thành một namespace duy nhất.
+
+VÍ DỤ:
+
+    #include <iostream>
+    #include <vector>
+    #include <algorithm>
+
+    namespace Algorithms {
+        // Định nghĩa thuật toán tìm kiếm
+        namespace Search {
+            bool linearSearch(const std::vector<int>& arr, int target) {
+                for (int num : arr) {
+                    if (num == target) return true; // Tìm thấy phần tử
+                }
+                return false; // Không tìm thấy
+            }
+        }
+    }
+
+    // Mở rộng namespace Algorithms để thêm thuật toán sắp xếp
+    namespace Algorithms {
+        namespace Sorting {
+            void bubbleSort(std::vector<int>& arr) {
+                for (size_t i = 0; i < arr.size() - 1; ++i) {
+                    for (size_t j = 0; j < arr.size() - i - 1; ++j) {
+                        if (arr[j] > arr[j + 1]) {
+                            std::swap(arr[j], arr[j + 1]); // Hoán đổi nếu cần thiết
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    int main() {
+        std::vector<int> data = {5, 1, 4, 2, 8};
+        // Gọi hàm bubbleSort từ namespace mở rộng
+        Algorithms::Sorting::bubbleSort(data);
+
+        std::cout << "Sorted array: ";
+        for (int num : data) {
+            std::cout << num << " ";
+        }
+        std::cout << std::endl;
+
+        // Gọi hàm linearSearch từ namespace ban đầu
+        bool found = Algorithms::Search::linearSearch(data, 4);
+        std::cout << "Element found: " << (found ? "Yes" : "No") << std::endl;
+
+        return 0;
+    }
 
 
 
