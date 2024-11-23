@@ -2473,13 +2473,14 @@ Khái niệm: Đa hình tại thời điểm chạy (Runtime Polymorphism) tro
 
  + Đơn giản hóa mã nguồn: Giúp viết các hàm và phương thức linh hoạt hơn khi không cần phải kiểm tra kiểu đối tượng cụ thể.
 
-VÍ DỤ:
+VÍ DỤ 1:
 
     #include <iostream>
     using namespace std;
 
     // Lớp cha Animal
-    class Animal {
+    class Animal 
+    {
     public:
         // Phương thức ảo
         virtual void makeSound() {
@@ -2519,6 +2520,44 @@ VÍ DỤ:
 
         return 0;
     }
+
+VÍ DỤ 2:
+
+    #include <iostream>
+    using namespace std;
+
+    class Base 
+    {
+    public:
+        virtual void print() 
+        { // Phương thức ảo
+            cout << "Base class print()" << endl;
+        }
+        virtual ~Base() {} // Destructor ảo để tránh lỗi khi xóa đối tượng dẫn xuất.
+    };
+
+    class Derived : public Base 
+    {
+    public:
+        void print() override 
+        { // Ghi đè phương thức print()
+            cout << "Derived class print()" << endl;
+        }
+    };
+
+    int main() 
+    {
+        Base* basePtr;             // Con trỏ lớp cơ sở
+        Derived derivedObj;        // Đối tượng lớp dẫn xuất
+
+        basePtr = &derivedObj;     // Con trỏ lớp cơ sở trỏ đến đối tượng lớp dẫn xuất
+
+        basePtr->print();          // Gọi phương thức print()
+
+        return 0;
+    }
+
+
 
 ### 2.ĐA HÌNH TẠI THỜI ĐIỂM BIÊN DỊCH
 
@@ -2620,19 +2659,22 @@ VÍ DỤ:
     using namespace std;
 
     // Lớp trừu tượng Shape
-    class Shape {
+    class Shape 
+    {
     public:
         // Phương thức thuần ảo
         virtual double area() = 0; // Hàm tính diện tích, chưa có triển khai
 
         // Phương thức thông thường
-        virtual void display() {
+        virtual void display() 
+        {
             cout << "This is a shape" << endl;
         }
     };
 
     // Lớp Circle kế thừa từ Shape
-    class Circle : public Shape {
+    class Circle : public Shape 
+    {
     private:
         double radius;
 
@@ -2640,7 +2682,8 @@ VÍ DỤ:
         Circle(double r) : radius(r) {}
 
         // Triển khai phương thức area()
-        double area() override {
+        double area() override 
+        {
             return 3.14159 * radius * radius;
         }
 
@@ -2672,6 +2715,7 @@ VÍ DỤ:
     int main() 
     {
         Shape* shape1 = new Circle(5.0);    // Tạo đối tượng Circle qua con trỏ lớp cha
+
         Shape* shape2 = new Rectangle(4.0, 6.0);  // Tạo đối tượng Rectangle qua con trỏ lớp cha
 
         // Gọi hàm display() của mỗi đối tượng
@@ -3088,9 +3132,250 @@ VÍ DỤ:
         return 0;
     }
 
+# Pattern
 
-ZXZX
+## Singleton Pattern
+
+Khái niệm: Singleton Pattern: Singleton Pattern là một mẫu thiết kế thuộc nhóm Creational Pattern. Nó đảm bảo rằng một lớp chỉ có một đối tượng duy nhất được tạo ra và cung cấp một điểm truy cập toàn cục đến đối tượng đó.
+
+Đặc điểm của Singleton Pattern:
+
+Duy nhất một instance: Chỉ có một đối tượng của lớp được tạo ra trong toàn bộ chương trình.
+Điểm truy cập toàn cục: Đối tượng có thể được truy cập từ bất kỳ đâu.
+Kiểm soát việc khởi tạo: Constructor của lớp được thiết kế để ngăn chặn việc tạo đối tượng từ bên ngoài.
+Ví dụ ứng dụng về Singleton Pattern:
+
+Quản lý cấu hình ứng dụng.
+Logger để ghi lại các sự kiện trong chương trình.
+Quản lý kết nối cơ sở dữ liệu.
+
+VÍ DỤ:
+
+    #include <iostream>
+
+    class Singleton {
+    private:
+        // Con trỏ duy nhất lưu trữ instance của lớp
+        static Singleton* instance;
+
+        // Constructor riêng tư để ngăn chặn việc khởi tạo từ bên ngoài
+        Singleton() {
+            std::cout << "Constructor được gọi\n";
+        }
+
+        // Ngăn chặn copy constructor và phép gán
+        Singleton(const Singleton&) = delete;
+        Singleton& operator=(const Singleton&) = delete;
+
+    public:
+        // Phương thức truy cập để lấy instance
+        static Singleton* getInstance() {
+            if (instance == nullptr) {
+                instance = new Singleton();
+            }
+            return instance;
+        }
+
+        void showMessage() {
+            std::cout << "Hello from Singleton!\n";
+        }
+    };
+
+    // Khởi tạo con trỏ tĩnh
+    Singleton* Singleton::instance = nullptr;
+
+    int main() {
+        // Lấy instance duy nhất của Singleton
+        Singleton* singleton = Singleton::getInstance();
+        singleton->showMessage();
+
+        // Thử gọi lại để kiểm chứng chỉ có một instance
+        Singleton* singleton2 = Singleton::getInstance();
+        singleton2->showMessage();
+
+        return 0;
+    }
+
+
+## Observer Pattern
+
+Khái niệm Observer Pattern: Observer Pattern là một mẫu thiết kế thuộc nhóm Behavioral Pattern. Mục đích của nó là thiết lập mối quan hệ phụ thuộc một-nhiều giữa các đối tượng để khi một đối tượng thay đổi trạng thái, tất cả các đối tượng phụ thuộc được thông báo và cập nhật tự động.
+
+Đặc điểm của Observer Pattern:
+
+Phát thông báo: Khi đối tượng chủ thể thay đổi, tất cả các đối tượng quan sát (observers) được thông báo.
+Mối quan hệ một-nhiều: Một đối tượng chủ thể có thể có nhiều đối tượng quan sát.
+Khả năng mở rộng: Dễ dàng thêm hoặc loại bỏ các đối tượng quan sát mà không ảnh hưởng đến đối tượng chủ thể.
+
+
+VÍ DỤ: 
+
+    #include <iostream>
+    #include <vector>
+    #include <string>
+    #include <algorithm>
+
+    // Interface for observers (display, logger, etc.)
+    class Observer {
+    public:
+        virtual void update(float temperature, float humidity, float light) = 0;
+    };
+
+    // Subject (SensorManager) holds the state and notifies observers
+    class SensorManager 
+    {
+        float temperature;
+        float humidity;
+        float light;
+        std::vector<Observer*> observers;
+    public:
+        void registerObserver(Observer* observer) 
+        {
+            observers.push_back(observer);
+        }
+
+        void removeObserver(Observer* observer) 
+        {
+            observers.erase(std::remove(observers.begin(), observers.end(), observer), observers.end());
+        }
+
+        void notifyObservers() 
+        {
+            for (auto observer : observers) 
+            {
+                observer->update(temperature, humidity, light);
+            }
+        }
+
+        void setMeasurements(float temp, float hum, float lightLvl) 
+        {
+            temperature = temp;
+            humidity = hum;
+            light = lightLvl;
+            notifyObservers();
+        }
+    };
+
+    // Display component (an observer)
+    class Display : public Observer 
+    {
+    public:
+        void update(float temperature, float humidity, float light) override {
+            std::cout << "Display: Temperature: " << temperature
+                    << ", Humidity: " << humidity
+                    << ", Light: " << light << std::endl;
+        }
+    };
+
+    // Logger component (an observer)
+    class Logger : public Observer {
+    public:
+        void update(float temperature, float humidity, float light) override {
+            std::cout << "Logging data... Temp: " << temperature
+                    << ", Humidity: " << humidity
+                    << ", Light: " << light << std::endl;
+        }
+    };
+
+    int main() 
+    {
+        SensorManager sensorManager;
+
+        Display display;
+        Logger logger;
+
+        sensorManager.registerObserver(&display);
+        sensorManager.registerObserver(&logger);
+
+        sensorManager.setMeasurements(25.0, 60.0, 700.0); // Simulate sensor data update
+        sensorManager.setMeasurements(26.0, 65.0, 800.0); // Another sensor update
+
+        return 0;
+    }
+
+## Decorator Pattern
+
+KHÁI NIỆM:
+Decorator Pattern là một mẫu thiết kế thuộc nhóm structural patterns, cho phép thêm các chức năng hoặc hành vi mới cho một đối tượng mà không cần thay đổi cấu trúc của lớp đối tượng đó. Mẫu này giúp mở rộng tính năng của các đối tượng bằng cách bao bọc (wrapping) chúng trong các lớp decorator đặc biệt.
 
 
 
 
+
+VÍ DỤ:
+
+    #include <iostream>  // Thư viện cho nhập/xuất dữ liệu.
+    using namespace std; // Sử dụng không gian tên chuẩn để truy cập các thành phần như cout.
+
+    // Lớp trừu tượng đại diện cho cảm biến
+    class Sensor
+    {
+        public:
+            virtual void readData() = 0; // Hàm thuần ảo buộc các lớp con phải triển khai.
+    };
+
+    // Lớp cảm biến nhiệt độ kế thừa từ Sensor
+    class TemperatureSensor : public Sensor 
+    {
+        public:
+
+            void readData() override 
+            { // Triển khai hàm readData cho cảm biến nhiệt độ.
+                cout << "reading temperature data: " << endl; // In thông báo dữ liệu nhiệt độ.
+            }
+    };
+
+    // Lớp cảm biến độ ẩm kế thừa từ Sensor
+    class HumiditySensor : public Sensor 
+    {
+        public:
+            void readData() override { // Triển khai hàm readData cho cảm biến độ ẩm.
+                cout << "reading humidity data: " << endl; // In thông báo dữ liệu độ ẩm.
+            }
+    };
+
+    // Lớp Decorator cơ bản dùng để trang trí thêm tính năng cho cảm biến
+    class SensorDecorator : public Sensor 
+    {
+        protected:
+            Sensor* wrappedSensor; // Con trỏ đến đối tượng cảm biến được "bọc".
+
+        public:
+            SensorDecorator(Sensor* sensor) : wrappedSensor(sensor) {} // Gán cảm biến cần trang trí qua constructor.
+
+            virtual void readData() override
+            { 
+                wrappedSensor->readData(); // Gọi phương thức readData() của cảm biến được bọc.
+            }
+    };
+
+    // Lớp Decorator thêm tính năng ghi log (log dữ liệu)
+    class LoggingSensor : public SensorDecorator 
+    {
+        public:
+            LoggingSensor(Sensor* sensor) : SensorDecorator(sensor) {} // Gọi constructor của lớp cha để gán cảm biến.
+
+            void readData() override 
+            {
+                cout << "LOG: sensor data" << endl; // Ghi log trước khi gọi hàm readData() của cảm biến gốc.
+
+                SensorDecorator::readData(); // Gọi phương thức readData() của lớp SensorDecorator.
+            }
+    };
+
+    int main(int argc, char const *argv[]) 
+    {
+        // Tạo một đối tượng cảm biến nhiệt độ
+        Sensor* tempSensor = new TemperatureSensor();
+        //0XC8
+
+        // Thêm tính năng log vào cảm biến nhiệt độ bằng cách bọc nó trong LoggingSensor
+        tempSensor  = new LoggingSensor(tempSensor);
+        //0XA1                              0XC8
+
+        // Gọi phương thức readData() để kiểm tra hoạt động của decorator
+        tempSensor ->readData();
+
+        // Trả về 0 cho biết chương trình kết thúc thành công.
+        return 0;
+    }
