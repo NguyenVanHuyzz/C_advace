@@ -3216,7 +3216,8 @@ VÍ DỤ:
     #include <algorithm>
 
     // Interface for observers (display, logger, etc.)
-    class Observer {
+    class Observer 
+    {
     public:
         virtual void update(float temperature, float humidity, float light) = 0;
     };
@@ -3260,7 +3261,8 @@ VÍ DỤ:
     class Display : public Observer 
     {
     public:
-        void update(float temperature, float humidity, float light) override {
+        void update(float temperature, float humidity, float light) override 
+        {
             std::cout << "Display: Temperature: " << temperature
                     << ", Humidity: " << humidity
                     << ", Light: " << light << std::endl;
